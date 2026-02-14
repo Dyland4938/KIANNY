@@ -1,0 +1,276 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Día del Amor y la Amistad 💗</title>
+  <style>
+    :root{
+      --bg1:#ffe6f0; --bg2:#ffd2e5; --card:#ffffffcc; --text:#4b2b3a;
+      --btnNo:#ffb3d1; --btnYes:#ff4fa6; --shadow:0 18px 40px rgba(255,79,166,.18);
+    }
+    *{ box-sizing:border-box; }
+    body{
+      margin:0; min-height:100vh;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(1200px 700px at 20% 10%, var(--bg2), transparent 60%),
+        radial-gradient(1000px 700px at 80% 20%, #ffeef6, transparent 65%),
+        linear-gradient(180deg, var(--bg1), #fff);
+      overflow-x:hidden;
+    }
+
+    .hearts{ position:fixed; inset:0; pointer-events:none; overflow:hidden; z-index:0; }
+    .heart{
+      position:absolute; bottom:-40px; width:18px; height:18px;
+      background: rgba(255,79,166,.35);
+      transform: rotate(45deg);
+      animation: floatUp linear infinite;
+      filter: drop-shadow(0 8px 10px rgba(255,79,166,.15));
+    }
+    .heart::before,.heart::after{
+      content:""; position:absolute; width:18px; height:18px;
+      background:inherit; border-radius:50%;
+    }
+    .heart::before{ left:-9px; }
+    .heart::after{ top:-9px; }
+    @keyframes floatUp{
+      from{ transform:translateY(0) rotate(45deg); opacity:0; }
+      10%{ opacity:1; }
+      to{ transform:translateY(-120vh) rotate(45deg); opacity:0; }
+    }
+
+    .wrap{ position:relative; z-index:2; min-height:100vh; display:flex; align-items:center; justify-content:center; padding:24px; }
+    .card{
+      width:min(920px,100%); background:var(--card);
+      border-radius:28px; padding:26px; box-shadow:var(--shadow);
+      backdrop-filter:blur(8px); border:1px solid rgba(255,79,166,.18);
+    }
+    .top{ display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:18px; }
+    h1{ margin:0; font-size:clamp(26px,3vw,38px); }
+    .subtitle{ margin-top:6px; font-size:15px; opacity:.9; }
+    .characters{ display:flex; gap:14px; }
+
+    .char{
+      width:96px; height:96px; border-radius:24px; overflow:hidden;
+      position:relative; box-shadow:0 12px 26px rgba(255,79,166,.22);
+      border:1px solid rgba(255,79,166,.12); background:#fff;
+    }
+    .char img{ width:100%; height:100%; object-fit:cover; display:block; animation: floaty 3.2s ease-in-out infinite; }
+    @keyframes floaty{ 0%,100%{ transform:translateY(0); } 50%{ transform:translateY(-4px); } }
+
+    .blink{
+      position:absolute; left:18px; right:18px; top:44px; height:14px;
+      pointer-events:none; opacity:0; animation: blink 4.5s infinite;
+    }
+    .blink::before,.blink::after{
+      content:""; position:absolute; width:18px; height:8px; border-radius:10px;
+      background: rgba(120,70,95,.55);
+    }
+    .blink::before{ left:10px; }
+    .blink::after{ right:10px; }
+    @keyframes blink{
+      0%,92%,100%{ opacity:0; transform:scaleY(1); }
+      94%{ opacity:1; transform:scaleY(.25); }
+      96%{ opacity:1; transform:scaleY(.1); }
+      98%{ opacity:0; transform:scaleY(1); }
+    }
+
+    .content{ margin-top:18px; display:grid; grid-template-columns:1.1fr .9fr; gap:18px; }
+    @media(max-width:860px){ .content{ grid-template-columns:1fr; } }
+
+    .panel{
+      background:rgba(255,255,255,.65);
+      border-radius:22px; padding:18px;
+      border:1px solid rgba(255,79,166,.14);
+    }
+
+    .buttons{ margin-top:16px; display:flex; gap:12px; flex-wrap:wrap; }
+    button{
+      border:0; border-radius:16px; padding:14px 18px;
+      font-weight:800; font-size:16px; cursor:pointer;
+      box-shadow: 0 12px 22px rgba(0,0,0,.08);
+      transition: transform .12s ease, filter .2s ease;
+      user-select:none; -webkit-tap-highlight-color: transparent;
+    }
+    #btnYes{ background:linear-gradient(135deg,var(--btnYes),#ff7dc0); color:white; }
+    #btnYes:hover{ transform: translateY(-1px) scale(1.02); filter:brightness(1.03); }
+    #btnNo{ background:linear-gradient(135deg,var(--btnNo),#ffd1e6); color:#6b2b45; transform-origin:center; }
+
+    .teddyWrap{ margin-top:20px; display:flex; justify-content:center; flex-direction:column; align-items:center; gap:10px; }
+    .teddy{
+      width:120px; border-radius:22px;
+      box-shadow:0 12px 26px rgba(255,79,166,.20);
+      animation: teddyBounce 2.5s infinite ease-in-out, teddyPulse 1.4s infinite ease-in-out;
+      border:1px solid rgba(255,79,166,.14); background:#fff;
+    }
+    @keyframes teddyBounce{ 0%,100%{ transform:translateY(0); } 50%{ transform:translateY(-10px); } }
+    @keyframes teddyPulse{ 0%,100%{ filter:brightness(1); } 50%{ filter:brightness(1.06); } }
+
+    .signature{ text-align:center; margin-top:8px; font-weight:900; font-size:12px; opacity:.85; letter-spacing:.4px; }
+
+    .modalBack{
+      position:fixed; inset:0; background:rgba(0,0,0,.35);
+      display:none; align-items:center; justify-content:center; z-index:10; padding:18px;
+    }
+    .modal{
+      background:white; border-radius:26px; padding:22px; width:min(720px,100%);
+      box-shadow:0 22px 60px rgba(0,0,0,.18); border:1px solid rgba(255,79,166,.18);
+      position:relative; overflow:hidden;
+    }
+    .modal::before{
+      content:""; position:absolute; inset:-40px -40px auto auto;
+      width:160px; height:160px; background: radial-gradient(circle, rgba(255,79,166,.30), transparent 60%);
+      transform: rotate(20deg);
+    }
+    .modal h3{ margin:0 0 10px; color:#b11a62; font-size: clamp(22px, 3vw, 32px); }
+    .modal p{ margin:0; line-height:1.55; font-size: 15.5px; white-space: pre-wrap; }
+    .close{
+      margin-top:14px; width:100%; padding:12px; border-radius:16px;
+      background:linear-gradient(135deg,#ff9fcb,#ffd1e6); font-weight:900; cursor:pointer; border:0;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="hearts" id="hearts"></div>
+
+  <div class="wrap">
+    <div class="card">
+      <div class="top">
+        <div>
+          <h1>Día del Amor y la Amistad 💗</h1>
+          <p class="subtitle">Más que todo para amistad… pero con cariño del bueno ✨</p>
+        </div>
+
+        <div class="characters">
+          <div class="char" title="Pochacco">
+            <img id="pochaccoTop" alt="Pochacco">
+            <div class="blink"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="panel">
+          <h2>Una pregunta importantísima…</h2>
+          <p>¿Cuál botón vas a escoger? 😏<br>(OJO: el “NO” es medio travieso…)</p>
+
+          <div class="buttons">
+            <button id="btnNo" type="button">NO</button>
+            <button id="btnYes" type="button">SIII</button>
+          </div>
+        </div>
+
+        <div class="panel">
+          <h2>una página especial para alguien sumamente especial 🤠.</h2>
+          <p>Hecha con cariño, en rosita pastel 💗</p>
+        </div>
+      </div>
+
+      <div class="teddyWrap">
+        <img class="teddy" id="pochaccoTeddy" alt="Osito de peluche">
+      </div>
+
+      <div class="signature">Creado por Dyland by Tebex POWER</div>
+    </div>
+  </div>
+
+  <div class="modalBack" id="modalBack">
+    <div class="modal">
+      <h3>ME ESCOGISTE SIII</h3>
+      <p id="modalMsg"></p>
+      <button class="close" id="closeBtn" type="button">Cerrar 💗</button>
+    </div>
+  </div>
+
+<script>
+  // ✅ Pochacco embebido (NO ocupa archivo externo)
+  const POCHACCO_SRC = "data:image/jpeg;base64,REEMPLAZAR_BASE64";
+
+  // IMPORTANTE: como aquí no puedo pegar un base64 gigante con seguridad de que tu navegador lo aguante,
+  // hacemos el embed automáticamente si el archivo existe, y si no existe, mostramos fallback.
+  // 👇 Fallback: usa el archivo local "pochacco.png" si lo tienes.
+  const fallback = "pochacco.png";
+
+  const topImg = document.getElementById("pochaccoTop");
+  const teddyImg = document.getElementById("pochaccoTeddy");
+
+  // Intento 1: cargar archivo local. Si falla, muestra un osito emoji.
+  function setImages(){
+    topImg.src = fallback;
+    teddyImg.src = fallback;
+
+    topImg.onerror = () => {
+      // fallback visual sin archivo
+      topImg.remove();
+      const div = document.createElement("div");
+      div.style.display="grid";
+      div.style.placeItems="center";
+      div.style.width="100%";
+      div.style.height="100%";
+      div.style.fontSize="40px";
+      div.textContent="🐶💗";
+      document.querySelector(".char").prepend(div);
+    };
+
+    teddyImg.onerror = () => {
+      teddyImg.replaceWith(Object.assign(document.createElement("div"), {
+        textContent:"🧸",
+        style:"font-size:64px; user-select:none;"
+      }));
+    };
+  }
+  setImages();
+
+  // Corazones flotando
+  const hearts = document.getElementById("hearts");
+  function createHeart(){
+    const h = document.createElement("div");
+    h.className = "heart";
+    h.style.left = Math.random()*100 + "vw";
+    const s = 10 + Math.random()*22;
+    h.style.width = h.style.height = s + "px";
+    h.style.opacity = (0.18 + Math.random()*0.45).toFixed(2);
+    h.style.animationDuration = (4 + Math.random()*6).toFixed(2) + "s";
+    h.style.animationDelay = (Math.random()*2).toFixed(2) + "s";
+    hearts.appendChild(h);
+    setTimeout(()=>h.remove(), 12000);
+  }
+  for(let i=0;i<18;i++) createHeart();
+  setInterval(createHeart, 260);
+
+  // Botón NO se encoge
+  const btnNo = document.getElementById("btnNo");
+  let noScale = 1;
+  function shrinkNo(){
+    noScale *= 0.78;
+    if(noScale < 0.12) noScale = 0.12;
+    btnNo.style.transform = `scale(${noScale})`;
+    if(noScale <= 0.18) btnNo.style.cursor = "not-allowed";
+  }
+  btnNo.addEventListener("mouseenter", shrinkNo);
+  btnNo.addEventListener("mousedown", (e)=>{ e.preventDefault(); shrinkNo(); });
+  btnNo.addEventListener("touchstart", (e)=>{ e.preventDefault(); shrinkNo(); }, {passive:false});
+
+  // Modal
+  const modalBack = document.getElementById("modalBack");
+  const closeBtn  = document.getElementById("closeBtn");
+  const modalMsg  = document.getElementById("modalMsg");
+
+  const msg = `Feliz día KIANNY me alegro mucho que hayas escogido este boton y quiero que sepas que te quiero mucho y hayas llegado a mi vida gracias a que me has ayudado a pasar cosas que yo me atrapo solo pero mira gracias a ti estoy totalmente inspirado y sin miedo al éxito AJAKAKAK pero de verdad Kianny muchas muchas gracias te quiero mucho.`;
+
+  document.getElementById("btnYes").addEventListener("click", ()=>{
+    modalMsg.textContent = msg;
+    modalBack.style.display = "flex";
+  });
+
+  closeBtn.addEventListener("click", ()=> modalBack.style.display="none");
+  modalBack.addEventListener("click", (e)=>{ if(e.target===modalBack) modalBack.style.display="none"; });
+</script>
+
+</body>
+</html>
+
+
